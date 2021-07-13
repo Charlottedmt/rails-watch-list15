@@ -1,0 +1,7 @@
+<h1> Bookmarks index </h1>
+<% @bookmarks.each do |bookmark| %>
+  <%= bookmark.movie.name %>
+  <%= link_to bookmark_path(bookmark), method: :delete, data: { confirm: "Are you sure?"} do %>
+    <i class="fas fa-trash"></i>
+  <% end %>
+<% end %>
