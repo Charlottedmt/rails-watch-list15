@@ -1,25 +1,21 @@
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= cl_image_path @list.photo.key%>);">
    <h2><%= @list.name %></h2>
 </div>
-<div class="btn btn-primary"> <%= link_to "Add a bookmark in this list", new_list_bookmark_path(@list) %> </div>
-<div class="cards">
-  <% @list.movies.each do |movie| %>
-    <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
-    <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= movie.poster_url %>')">
-    <%= movie.title %>
-    <%= movie.rating %>
-    <%= bookmark.comment %>
-  <% end %>
+<div class="container-left">
+  <div class="cards">
+    <% @list.movies.each do |movie| %>
+      <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= movie.poster_url %>')">
+        <%= movie.title %>
+        <%= movie.rating %>
+        <%= bookmark.comment %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="container-right">
+  <div class="btn btn-primary"> <%= link_to "Add a bookmark in this list", new_list_bookmark_path(@list) %> </div>
 </div>
 
-<div class="owl-carousel owl-theme">
-        <% @list.bookmarks.each do |bookmark| %>
-          <div class="item card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= bookmark.movie.poster_url %>)" data-action="click->movie#select" data-template='<%= ActionController::Base.new.render_to_string(partial: 'movies/selected', locals: { movie: bookmark.movie, bookmark: bookmark }) %>'>
-            <%= bookmark.movie.title %>
-            <div class="card-rating">
-              <i class="fas fa-star"></i> <%= bookmark.movie.rating %>
-            </div>
-          </div>
-        <% end %>
-      </div>
+
 
