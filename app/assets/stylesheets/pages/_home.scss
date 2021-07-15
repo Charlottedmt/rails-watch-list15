@@ -1,1 +1,13 @@
 // Specific CSS for your home-page
+a {
+  color: white;
+  &:hover {
+    color: aquamarine;
+    text-decoration: none;
+
+  }
+}
+
+.title {
+  margin-left: 20px;
+}

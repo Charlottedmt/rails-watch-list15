@@ -26,8 +26,8 @@
     </ul>
   </div>
 </div>
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
-  <div class="container">
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1340&q=80);">
+  <div class="title">
     <h1> Movie time! </h1>
     <p> Save easily the movies you want to watch</p>
     <div class="btn btn-primary"> <%= link_to "Create a new list", new_list_path %> </div>
@@ -37,28 +37,30 @@
 
 <h2> Most recent lists </h2>
 
-<% @lists.last(4).each do |list| %>
 <div class="cards">
-  <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
-    Breakfast
-  </div>
-
-  <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/lunch.jpg)">
-    Lunch
-  </div>
-
-  <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/dinner.jpg)">
-    Dinner
-  </div>
+  <% @lists.last(4).each do |list| %>
+    <% if list.photo.attached? %>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path list.photo.key, height: 300, width: 300, crop: :fill %>')">
+        <%= link_to list.name, list_path(list) %>
+        <div class="delete">
+          <%= link_to list_path(list), method: :delete, data: { confirm: "Are you sure?"} do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/lunch.jpg)">
+        <%= link_to list.name, list_path(list) %>
+        <div class="delete">
+          <%= link_to list_path(list), method: :delete, data: { confirm: "Are you sure?"} do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
 
-  <%= link_to list.name, list_path(list) %>
-  <%= link_to list_path(list), method: :delete, data: { confirm: "Are you sure?"} do %>
-    <i class="fas fa-trash"></i>
-  <% end %>
-<% end %>
-
-<%= link_to "Create a new list", new_list_path %>
 
 
 
